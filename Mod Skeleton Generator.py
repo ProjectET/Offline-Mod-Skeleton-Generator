@@ -1,13 +1,16 @@
+# The Dependencies
 import numpy as np
 import imageio
 import os
 import sys
 
+# The Title, ASCI art and credits
 os.system("title Mod Skeleton Generator")
 print "  __  __           _    _____ _        _      _                 _____                           _             " + '\n' + " |  \\/  |         | |  / ____| |      | |    | |               / ____|                         | |            " + '\n' + " | \\  / | ___   __| | | (___ | | _____| | ___| |_ ___  _ __   | |  __  ___ _ __   ___ _ __ __ _| |_ ___  _ __ " + '\n' + " | |\\/| |/ _ \\ / _` |  \\___ \\| |/ / _ \\ |/ _ \\ __/ _ \\| '_ \\  | | |_ |/ _ \\ '_ \\ / _ \\ '__/ _` | __/ _ \\| '__|" + '\n' + " | |  | | (_) | (_| |  ____) |   <  __/ |  __/ || (_) | | | | | |__| |  __/ | | |  __/ | | (_| | || (_) | |   " + '\n' + " |_|  |_|\\___/ \\__,_| |_____/|_|\\_\\___|_|\\___|\\__\\___/|_| |_|  \\_____|\\___|_| |_|\\___|_|  \\__,_|\\__\\___/|_|   \n"
 print "Created by ProjectET.\nOriginal mod skeleton generator by jopojelly."
 print "--------------------------------------------------------------------------\n"
 
+# Loop until one of the two commands are entered.
 options = ["generate", "quit"]
 while True:
     In = raw_input("To begin generating files type 'generate', to close the generator type 'quit': ")
@@ -18,13 +21,17 @@ while True:
     else:
         print "Invalid command. Enter 'generate' or 'quit'.\n"
 
+# File Generation
 if In == "generate":
+    # Clears the console and reprints the menu
     clear = lambda: os.system('cls')
     clear()
     print "  __  __           _    _____ _        _      _                 _____                           _             " + '\n' + " |  \\/  |         | |  / ____| |      | |    | |               / ____|                         | |            " + '\n' + " | \\  / | ___   __| | | (___ | | _____| | ___| |_ ___  _ __   | |  __  ___ _ __   ___ _ __ __ _| |_ ___  _ __ " + '\n' + " | |\\/| |/ _ \\ / _` |  \\___ \\| |/ / _ \\ |/ _ \\ __/ _ \\| '_ \\  | | |_ |/ _ \\ '_ \\ / _ \\ '__/ _` | __/ _ \\| '__|" + '\n' + " | |  | | (_) | (_| |  ____) |   <  __/ |  __/ || (_) | | | | | |__| |  __/ | | |  __/ | | (_| | || (_) | |   " + '\n' + " |_|  |_|\\___/ \\__,_| |_____/|_|\\_\\___|_|\\___|\\__\\___/|_| |_|  \\_____|\\___|_| |_|\\___|_|  \\__,_|\\__\\___/|_|   \n"
     print "Created by ProjectET.\nOriginal mod skeleton generator by jopojelly."
     print "--------------------------------------------------------------------------\n"
     print "For Mod Name and 1st Item's Name, don't use apostrophes or other special characters.\n"
+    
+    # Assigning values to variables
     z = 0
     x = 0
     c = 0
@@ -35,6 +42,7 @@ if In == "generate":
     erv = ""
     Ite = "Items"
     
+    # Error checker, if input is empty it raises an error is not then assigns a variable to 1.
     try:
         Mn = raw_input("Enter Mod name (No spaces or special characters): ")
         if not Mn:
@@ -71,8 +79,10 @@ if In == "generate":
     except ValueError:
         erv = "Username"
 
+    # adds all the error checker variables together, if it adds to 4 then it continues generating files, if not then raises an error
     b = z + x + c + v
     if b == 4:
+        # Generates the build file
         os.makedirs(os.path.join(Mn, Ite))
         nl = '\n'
         buildtxt = os.path.join(Mn, "build.txt")
@@ -80,11 +90,13 @@ if In == "generate":
         build.write("author = " + MA + nl)
         build.write("version = 0.1" + nl)
         build.write("displayName = " + Md)
-                
+        
+        # Generates the description file        
         desctxt = os.path.join(Mn, "description.txt")
         desc = open(desctxt, "w")
         desc.write(Md + " is a pretty cool mod, it does...this. Modify this file with a description of your mod.")
 
+        # Generates the item code which is the example sword.
         Itemcs = os.path.join(Mn, Ite, It + '.cs')
         Itcs = open(Itemcs, "w")
         Itcs.write("using Terraria.ID;" + nl + "using Terraria.Modloader;" + nl + nl + "namespace " + Mn + '.Items' + nl + "{" + nl + "  public class " + It + ' : ModItem' + nl)
@@ -97,7 +109,10 @@ if In == "generate":
         Itcs.write('			recipe.AddIngredient(ItemID.DirtBlock, 10);' + nl + '			recipe.AddTile(TileID.WorkBenches);' + nl + '			recipe.SetResult(this);' + nl)
         Itcs.write('			recipe.AddRecipe();' + nl + '		}' + nl + '	}' + nl + '}')
 
+        # Generates the 40x40 image, the 'data[y,x] = <var>' are the pixel values. This is the code that significantly increased file size.
         data = np.zeros( (40,40,4), dtype=np.uint8 )
+        
+        # These <var> assigns the colour (color if you are American) values.
         tra = [0,0,0,0]
         bla = [26,26,26,255]
         dgr = [102,102,102,255]
@@ -146,12 +161,14 @@ if In == "generate":
         data[0,39] = bla; data[1,39] = bla; data[2,39] = bla; data[3,39] = bla; data[4,39] = bla; data[5,39] = bla; data[6,39] = tra; data[7,39] = tra; data[8,39] = tra; data[9,39] = tra; data[10,39] = tra; data[11,39] = tra; data[12,39] = tra; data[13,39] = tra; data[14,39] = tra; data[15,39] = tra; data[16,39] = tra; data[17,39] = tra; data[18,39] = tra; data[19,39] = tra; data[20,39] = tra; data[21,39] = tra; data[22,39] = tra; data[23,39] = tra; data[24,39] = tra; data[25,39] = tra; data[26,39] = tra; data[27,39] = tra; data[28,39] = tra; data[29,39] = tra; data[30,39] = tra; data[31,39] = tra; data[32,39] = tra; data[33,39] = tra; data[34,39] = tra; data[35,39] = tra; data[36,39] = tra; data[37,39] = tra; data[38,39] = tra; data[39,39] = tra
         fd = os.path.join(Mn, Ite, It + '.png')
         imageio.imwrite(fd, data)  
-
+        
+        # Generates the main cs file
         MnMain = os.path.join(Mn, Mn + ".cs")
         Mncs = open(MnMain, "w")
         Mncs.write("using Terraria.ModLoader;" + nl + nl + "namespace " + Mn + nl + '{' + nl + '    class ' + Mn + ' : Mod' + nl + '	{' + nl + '		public ' + Mn + '()' + nl)
         Mncs.write("		{" + nl + "		}" + nl + '	}' + nl + '}')
-
+        
+        # Generates the .csproj file with build params
         Mnproj = os.path.join(Mn, Mn + ".csproj")
         Mnpr = open(Mnproj, "w")
         Mnpr.write('<?xml version="1.0" encoding="utf-8"?>' + nl + '<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' + nl)
@@ -176,7 +193,8 @@ if In == "generate":
         Mnpr.write('    <Reference Include="System" />' + nl + '    <Reference Include="Terraria">' + nl + '      <HintPath>C:\\Program Files (x86)\\Steam\\steamapps\\common\\terraria\\Terraria.exe</HintPath>' + nl + '    </Reference>' + nl)
         Mnpr.write('  </ItemGroup>' + nl + '  <Import Project="$(MSBuildToolsPath)\\Microsoft.CSharp.targets" />' + nl + '  <PropertyGroup>' + nl + """   <PostBuildEvent>"C:\\Program Files (x86)\\Steam\\steamapps\\common\\terraria\\Terraria.exe" -build "$(ProjectDir)\\" -eac "$(TargetPath)"</PostBuildEvent>""" + nl)
         Mnpr.write('  </PropertyGroup>' + nl + '</Project>')
-                
+        
+        # Generates the csproj.user file
         Mnproju = os.path.join(Mn, Mn + ".csproj.user")
         Mnpru = open(Mnproju, "w")
         Mnpru.write('<?xml version="1.0" encoding="utf-8"?>' + nl + '<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' + nl)
@@ -187,12 +205,15 @@ if In == "generate":
         os.system("pause")
         sys.exit(0)
     else:
+        # Clears the console and prints ASCI art, credits and prints an error.
         clear = lambda: os.system('cls')
         clear()
         print "  __  __           _    _____ _        _      _                 _____                           _             " + '\n' + " |  \\/  |         | |  / ____| |      | |    | |               / ____|                         | |            " + '\n' + " | \\  / | ___   __| | | (___ | | _____| | ___| |_ ___  _ __   | |  __  ___ _ __   ___ _ __ __ _| |_ ___  _ __ " + '\n' + " | |\\/| |/ _ \\ / _` |  \\___ \\| |/ / _ \\ |/ _ \\ __/ _ \\| '_ \\  | | |_ |/ _ \\ '_ \\ / _ \\ '__/ _` | __/ _ \\| '__|" + '\n' + " | |  | | (_) | (_| |  ____) |   <  __/ |  __/ || (_) | | | | | |__| |  __/ | | |  __/ | | (_| | || (_) | |   " + '\n' + " |_|  |_|\\___/ \\__,_| |_____/|_|\\_\\___|_|\\___|\\__\\___/|_| |_|  \\_____|\\___|_| |_|\\___|_|  \\__,_|\\__\\___/|_|   \n"
         print "Created by ProjectET.\nOriginal mod skeleton generator by jopojelly."
         print "--------------------------------------------------------------------------\n"
         print "ERROR | Following field(s) are empty.\n-----------------------------------"
+    
+    # Prints which field are errors by checking which one didnt assign a 1 to the z, x, c, or v variable.
     if z != 1:
         print erz
     if x != 1:
