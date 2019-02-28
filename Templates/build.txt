@@ -1,0 +1,3 @@
+author = {username}
+version = 0.1
+displayName = {displayname}
