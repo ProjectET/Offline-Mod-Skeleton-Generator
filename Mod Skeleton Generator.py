@@ -3,11 +3,6 @@ import os
 import sys
 from shutil import copyfile
 
-try:
-    os.mkdir("Output")
-except OSError:
-    pass
-
 def coderun():
     z = 0
     x = 0
@@ -109,7 +104,24 @@ def cred():
     print "TModloader Mod Skeleton Generator\n\nCreated by ProjectET.\nOriginal mod skeleton generator by jopojelly."
     print "--------------------------------------------------------------------------\n"
 
+def FC():
+    BaseFileCheck = ['build.txt', 'description.txt', 'modname.cs', 'modname.csproj', 'modname.csproj.user']
+    ItemsFileCheck = ['itemname.cs', 'itemname.png']
+    cred()
+    try:
+        for x in BaseFileCheck:
+            if not os.path.isfile(os.path.join("Templates", x)):
+                raise IOError
+        for x in ItemsFileCheck:
+            if not os.path.isfile(os.path.join("Templates", "Items", x)):
+                raise IOError
+    except IOError:
+        print "One or more files are missing in the templates folder. The generator cannot continue.\n"
+        raw_input("Press 'enter' to close.")
+        sys.exit(0)
+
 while True:
+    FC()
     coderun()
     while True:
         lsg = raw_input("Would you like to generate another skeleton? Enter 'y', otherwise 'n' to close. ")
